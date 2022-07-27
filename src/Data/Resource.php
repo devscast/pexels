@@ -1,0 +1,33 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Devscast\Pexels\Data;
+
+/**
+ * class Resource.
+ *
+ * @author bernard-ng <bernard@devscast.tech>
+ */
+abstract class Resource
+{
+    /**
+     * @var int The id of the resource.
+     */
+    public int $id;
+
+    /**
+     * @var int The real width of the resource in pixels.
+     */
+    public int $width;
+
+    /**
+     * @var int The real height of the resource in pixels.
+     */
+    public int $height;
+
+    /**
+     * @var string The Pexels URL where the resource is located.
+     */
+    public string $url;
+}
