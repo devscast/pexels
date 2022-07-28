@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Devscast\Pexels;
 
-use Devscast\Pexels\Data\Collection;
 use Devscast\Pexels\Data\CollectionMedia;
 use Devscast\Pexels\Data\Collections;
 use Devscast\Pexels\Data\Photo;
