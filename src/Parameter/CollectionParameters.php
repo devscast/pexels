@@ -25,7 +25,7 @@ final class CollectionParameters extends Parameters
     public function __construct(?string $type = null, int $page = 1, int $per_page = 15)
     {
         parent::__construct($page, $per_page);
-        Assert::nullOrOneOf($type, ['Photo', 'Video']);
+        Assert::nullOrOneOf($type, ['photos', 'videos']);
 
         $this->type = $type;
     }
