@@ -126,6 +126,8 @@ final class ClientTest extends TestCase
         $collections = $pexels->collection("33");
 
         $this->assertInstanceOf(CollectionMedia::class, $collections);
+
+        /** @var Photo|Video $media */
         foreach ($collections->media as $media) {
             if ('photo' === $media->type) {
                 $this->assertInstanceOf(Photo::class, $media);
