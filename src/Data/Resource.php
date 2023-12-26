@@ -30,4 +30,9 @@ abstract class Resource
      * @var string The Pexels URL where the resource is located.
      */
     public string $url;
+
+    /**
+     * @var string|null The type of the resource. Possible values are photo and video.
+     */
+    public ?string $type = null;
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Devscast\Pexels;
 
+use Devscast\Pexels\Data\Collection;
 use Devscast\Pexels\Data\CollectionMedia;
 use Devscast\Pexels\Data\Collections;
 use Devscast\Pexels\Data\Photo;
@@ -305,7 +306,7 @@ class Client
                 $data['videos']
             ),
             $mapped instanceof Collections =>$mapped->collections = array_map(
-                fn ($m) => $this->serializer->denormalize($m, type: Collections::class),
+                fn ($m) => $this->serializer->denormalize($m, type: Collection::class),
                 $data['collections']
             ),
             $mapped instanceof CollectionMedia => $mapped->media = array_map(function ($m) {

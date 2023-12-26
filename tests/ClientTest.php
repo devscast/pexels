@@ -11,10 +11,10 @@ use Devscast\Pexels\Data\Video;
 use Devscast\Pexels\Data\Photo;
 use Devscast\Pexels\Data\Photos;
 use Devscast\Pexels\Data\Videos;
+use Devscast\Pexels\Data\Collection;
 use Devscast\Pexels\Data\Collections;
 use Devscast\Pexels\Data\CollectionMedia;
 use Symfony\Component\HttpClient\MockHttpClient;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\HttpClient\Response\MockResponse;
 
 /**
@@ -48,6 +48,7 @@ final class ClientTest extends TestCase
         $photos = $pexels->searchPhotos('westie dog');
 
         $this->assertInstanceOf(Photos::class, $photos);
+        $this->assertContainsOnlyInstancesOf(Photo::class, $photos->photos);
     }
 
     public function testSearchVideos(): void
@@ -57,6 +58,7 @@ final class ClientTest extends TestCase
         $videos = $pexels->searchVideos('westie dog');
 
         $this->assertInstanceOf(Videos::class, $videos);
+        $this->assertContainsOnlyInstancesOf(Video::class, $videos->videos);
     }
 
     public function testPhoto(): void
@@ -84,6 +86,7 @@ final class ClientTest extends TestCase
         $videos = $pexels->popularVideos();
 
         $this->assertInstanceOf(Videos::class, $videos);
+        $this->assertContainsOnlyInstancesOf(Video::class, $videos->videos);
     }
 
     public function curatedPhotos(): void
@@ -93,6 +96,7 @@ final class ClientTest extends TestCase
         $photos = $pexels->curatedPhotos();
 
         $this->assertInstanceOf(Photos::class, $photos);
+        $this->assertContainsOnlyInstancesOf(Photo::class, $photos->photos);
     }
 
     public function testFeaturedCollections(): void
@@ -102,6 +106,7 @@ final class ClientTest extends TestCase
         $collections = $pexels->featuredCollections();
 
         $this->assertInstanceOf(Collections::class, $collections);
+        $this->assertContainsOnlyInstancesOf(Collection::class, $collections->collections);
     }
 
     public function testCollections(): void
@@ -111,6 +116,7 @@ final class ClientTest extends TestCase
         $collections = $pexels->collections();
 
         $this->assertInstanceOf(Collections::class, $collections);
+        $this->assertContainsOnlyInstancesOf(Collection::class, $collections->collections);
     }
 
     public function testCollection(): void
@@ -120,5 +126,14 @@ final class ClientTest extends TestCase
         $collections = $pexels->collection("33");
 
         $this->assertInstanceOf(CollectionMedia::class, $collections);
+        foreach ($collections->media as $media) {
+            if ('photo' === $media->type) {
+                $this->assertInstanceOf(Photo::class, $media);
+            }
+
+            if ('video' === $media->type) {
+                $this->assertInstanceOf(Video::class, $media);
+            }
+        }
     }
 }
