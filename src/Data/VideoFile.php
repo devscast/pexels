@@ -44,4 +44,9 @@ final class VideoFile
      * @var string  link to where the video_file is hosted.
      */
     public string $link;
+
+    /**
+     * @var string|null frame rate of the video_file.
+     */
+    public ?string $fps = null;
 }

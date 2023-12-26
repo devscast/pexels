@@ -31,7 +31,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  */
 class Client
 {
-    private readonly HttpClientInterface $http;
+    private HttpClientInterface $http;
 
     private Serializer $serializer;
 
@@ -295,35 +295,25 @@ class Client
         /** @var Photos|Videos|Collections|CollectionMedia $mapped */
         $mapped = $this->serializer->denormalize($data, $type);
 
-        switch (true) {
-            case is_subclass_of($mapped, Photos::class):
-                $mapped->photos = array_map(
-                    fn ($m) => $this->serializer->denormalize($m, type: Photo::class),
-                    $data['photos']
-                );
-                break;
-            case is_subclass_of($mapped, Videos::class):
-                $mapped->videos = array_map(
-                    fn ($m) => $this->serializer->denormalize($m, type: Video::class),
-                    $data['videos']
-                );
-                break;
-            case is_subclass_of($mapped, Collections::class):
-                $mapped->collections = array_map(
-                    fn ($m) => $this->serializer->denormalize($m, type: Collections::class),
-                    $data['collections']
-                );
-                break;
-            case is_subclass_of($mapped, CollectionMedia::class):
-                $mapped->media = array_map(function ($m) {
-                    return $m['type'] === 'Photo' ?
-                        $this->serializer->denormalize($m, type: Photo::class) :
-                        $this->serializer->denormalize($m, type: Video::class);
-                }, $data['media']);
-                break;
-            default:
-                throw new \Exception('Unexpected $type value');
-        }
+        match (true) {
+            $mapped instanceof Photos => $mapped->photos = array_map(
+                fn ($m) => $this->serializer->denormalize($m, type: Photo::class),
+                $data['photos']
+            ),
+            $mapped instanceof Videos => $mapped->videos = array_map(
+                fn ($m) => $this->serializer->denormalize($m, type: Video::class),
+                $data['videos']
+            ),
+            $mapped instanceof Collections =>$mapped->collections = array_map(
+                fn ($m) => $this->serializer->denormalize($m, type: Collections::class),
+                $data['collections']
+            ),
+            $mapped instanceof CollectionMedia => $mapped->media = array_map(function ($m) {
+                return $m['type'] === 'Photo' ?
+                    $this->serializer->denormalize($m, type: Photo::class) :
+                    $this->serializer->denormalize($m, type: Video::class);
+            }, $data['media'])
+        };
 
         return $mapped;
     }

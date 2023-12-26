@@ -22,11 +22,20 @@ final class CollectionParameters extends Parameters
      */
     public readonly ?string $type;
 
-    public function __construct(?string $type = null, int $page = 1, int $per_page = 15)
+    /**
+     * @var string
+     *
+     * The order of items in the media collection. Supported values are: asc, desc. Default: asc
+     */
+    public readonly string $sort;
+
+    public function __construct(?string $type = null, int $page = 1, int $per_page = 15, string $sort = 'asc')
     {
         parent::__construct($page, $per_page);
         Assert::nullOrOneOf($type, ['photos', 'videos']);
+        Assert::nullOrOneOf($sort, ['asc', 'desc']);
 
         $this->type = $type;
+        $this->sort = $sort;
     }
 }
