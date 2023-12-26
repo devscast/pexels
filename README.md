@@ -1,6 +1,7 @@
 # Pexels PHP
 
 ![Lint](https://github.com/devscast/pexels/actions/workflows/lint.yaml/badge.svg)
+![Test](https://github.com/devscast/pexels/actions/workflows/test.yaml/badge.svg)
 [![Latest Stable Version](https://poser.pugx.org/devscast/pexels/version)](https://packagist.org/packages/devscast/pexels)
 [![Total Downloads](https://poser.pugx.org/devscast/pexels/downloads)](https://packagist.org/packages/devscast/pexels)
 [![License](https://poser.pugx.org/devscast/pexels/license)](https://packagist.org/packages/devscast/pexels)
