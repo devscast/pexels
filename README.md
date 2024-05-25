@@ -134,11 +134,3 @@ Note: The prev_page and next_page response attributes will only be returned if t
   <img src="https://contrib.rocks/image?repo=devscast/pexels"/>
 </a>
 
-## Follow Us
-
-We're on social media:
-
-- [@DevscastTech](https://twitter.com/devscasttech) on Twitter. You should follow it.
-- [Devscast](https://www.linkedin.com/company/devscast/) on LinkedIn
-- [@devscast.tech](https://www.instagram.com/devscast.tech/) On Instagram.
-- [devscast.tech](https://web.facebook.com/devscast.tech/) on Facebook
