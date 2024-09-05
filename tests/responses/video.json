@@ -17,7 +17,8 @@
       "file_type": "video/mp4",
       "width": 1080,
       "height": 1920,
-      "link": "https://player.vimeo.com/external/342571552.hd.mp4?s=6aa6f164de3812abadff3dde86d19f7a074a8a66&profile_id=175&oauth2_token_id=57447761"
+      "link": "https://player.vimeo.com/external/342571552.hd.mp4?s=6aa6f164de3812abadff3dde86d19f7a074a8a66&profile_id=175&oauth2_token_id=57447761",
+      "fps": 30
     },
     {
       "id": 125005,

@@ -46,7 +46,7 @@ final class VideoFile
     public string $link;
 
     /**
-     * @var string|null frame rate of the video_file.
+     * @var float|null frame rate of the video_file.
      */
-    public ?string $fps = null;
+    public ?float $fps = null;
 }
