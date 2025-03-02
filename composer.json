@@ -31,14 +31,14 @@
         "squizlabs/php_codesniffer": "^3.7",
         "symplify/easy-coding-standard": "^11.0",
         "symfony/var-dumper": "^6.1|^7.0",
-        "rector/rector": "^1.2"
+        "rector/rector": "^1.2",
+        "phpunit/phpunit": "^10|^11.5"
     },
     "require": {
         "php": ">=8.2",
         "symfony/http-client": "^6.1|^7.0",
         "symfony/serializer": "^6.1|^7.0",
         "symfony/property-access": "^6.1|^7.0",
-        "phpunit/phpunit": "^10|^11",
         "webmozart/assert": "^1.11"
     }
 }
