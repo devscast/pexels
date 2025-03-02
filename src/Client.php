@@ -30,7 +30,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  *
  * @author bernard-ng <bernard@devscast.tech>
  */
-class Client
+readonly class Client
 {
     private HttpClientInterface $http;
 
@@ -266,17 +266,14 @@ class Client
 
     /**
      * @throws NetworkException
-     * @noinspection PhpReturnValueOfMethodIsNeverUsedInspection
      */
     private function createExceptionFromResponse(\Throwable $exception): never
     {
         if ($exception instanceof HttpExceptionInterface) {
             try {
                 $response = $exception->getResponse();
-                $body = $response->toArray(throw: false);
                 throw NetworkException::create(
-                    message: $body['message'] ?? '',
-                    type: $body['error'],
+                    message: $response->getContent(false),
                     status: $response->getStatusCode()
                 );
             } catch (\Throwable $exception) {
@@ -309,11 +306,9 @@ class Client
                 fn ($m) => $this->serializer->denormalize($m, type: Collection::class),
                 $data['collections']
             ),
-            $mapped instanceof CollectionMedia => $mapped->media = array_map(function ($m) {
-                return $m['type'] === 'Photo' ?
-                    $this->serializer->denormalize($m, type: Photo::class) :
-                    $this->serializer->denormalize($m, type: Video::class);
-            }, $data['media'])
+            $mapped instanceof CollectionMedia => $mapped->media = array_map(fn($m) => $m['type'] === 'Photo' ?
+                $this->serializer->denormalize($m, type: Photo::class) :
+                $this->serializer->denormalize($m, type: Video::class), $data['media'])
         };
 
         return $mapped;

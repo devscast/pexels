@@ -27,11 +27,7 @@ final class ClientTest extends TestCase
     private function getPexels(callable|MockResponse $mock): Client
     {
         $pexels = new Client('your_token');
-        $reflection = new ReflectionClass($pexels);
-
-        $http = $reflection->getProperty('http');
-        $http->setAccessible(true);
-        $http->setValue($pexels, new MockHttpClient($mock));
+        $this->setValue($pexels, 'http', new MockHttpClient($mock));
 
         return $pexels;
     }
@@ -137,5 +133,24 @@ final class ClientTest extends TestCase
                 $this->assertInstanceOf(Video::class, $media);
             }
         }
+    }
+
+    private function setValue(object &$object, string $propertyName, mixed $value): void
+    {
+        $reflectionClass = new ReflectionClass($object);
+
+        if ($reflectionClass->getProperty($propertyName)->isReadOnly()) {
+            $mutable = $reflectionClass->newInstanceWithoutConstructor();
+
+            foreach ($reflectionClass->getProperties() as $property) {
+                if ($property->isInitialized($object) && $property->name != $propertyName) {
+                    $reflectionClass->getProperty($property->name)->setValue($mutable, $property->getValue($object));
+                }
+            }
+
+            $object = $mutable;
+        }
+
+        $reflectionClass->getProperty($propertyName)->setValue($object, $value);
     }
 }
